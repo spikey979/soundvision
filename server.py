@@ -12,7 +12,7 @@ public_url = ngrok.connect(port).public_url
 print("ovo je public_url", public_url)
 print("ovo je port", port)
 
-#app.config["BASE_URL"] = public_url
+app.config["BASE_URL"] = public_url
 @app.route("/")
 def index():
   return render_template("index.html")
