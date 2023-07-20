@@ -1,0 +1,132 @@
+body {
+	background-color: rgb(54, 54, 54);
+	font-family:Arial;
+	font-size:20px;
+	color: rgb(187, 187, 187);
+}
+
+h1 {
+	border: 0px #eee solid;
+	color: rgb(255, 75, 75);
+	text-align: center;
+	padding: 10px;
+}
+
+h2 {
+	border: 0px #eee solid;
+	color: rgb(255, 75, 75);
+	text-align: center;
+	padding: 10px;
+}
+
+.upozorenje {
+	font-size:15px;
+	color: rgb(255, 0, 0);
+}
+
+.naslov_boja {
+	color: rgb(255, 75, 75);
+}
+
+.sadrzaj_prikazi {
+	display: block; 
+}
+
+.sadrzaj_sakrij {
+	display: none; 
+}
+
+.velika_slova {
+	font-size:25px;
+}
+
+.sredina_vertikalno {
+	display: flex;
+	justify-content:center;
+}
+
+.sredina_vertikalno_text {
+	margin: auto;
+	padding: 10px;
+	text-align: center;
+}
+
+.okvir_bez_okvira {
+	width: 30%;
+	margin: 20px 20px 20px 20px;
+	padding: 10px 10px 10px 10px;
+}
+
+.okvir {
+	width: 30%;
+	margin: 20px 20px 20px 20px;
+	border: 2px solid #767676;
+	padding: 10px 10px 10px 10px;
+	border-radius: 5px;
+}
+
+.button_margin {
+	margin: 10px;
+	/* padding: 50px; */
+}
+
+.container {
+	/* height: 30px; */
+	position: relative;
+	margin: 50px;
+	/* border: 3px solid green; */
+}
+
+.vertical-center {
+	margin: 0;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	-ms-transform: translate(-50%, -50%);
+	transform: translate(-50%, -50%);
+}
+
+a:link {
+	color: rgb(187, 187, 187);
+	background-color: transparent;
+	text-decoration: none;
+}
+a:visited {
+	color: rgb(187, 187, 187);
+	background-color: transparent;
+	text-decoration: none;
+}
+a:hover {
+	color: rgb(205, 88, 15);
+	background-color: transparent;
+	text-decoration: underline;
+}
+a:active {
+	color: rgb(187, 187, 187);
+	background-color: transparent;
+	text-decoration: underline;
+}
+
+ul {
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+	overflow: hidden;
+	/* background-color: #333; */
+}
+
+li {
+	float: left;
+}
+
+li a {
+	display: block;
+	color: white;
+	text-align: center;
+	padding: 14px 16px;
+	text-decoration: none;
+}
+
+li a:hover {
+	background-color: rgb(29, 29, 29);
+}
