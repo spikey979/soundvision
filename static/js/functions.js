@@ -11,17 +11,18 @@ $(document).ready(function(){
 		//alert("ovo je btnRefresh");
 		//window.location.replace("/");
 		action = 'abc'
-		payload = {'ime': 'kiki', 'prezime': 'riki'}
-		//ajax_js(action, payload);
+		payload = {'ime': 'mirek', 'prezime': 'lisica'}
+		ajax_js(action, payload);
 
-		abc();
+		//abc();
 
 		
 	});
 
 	$('#btnCancel').click(function () {
 		//$("#player_details").hide();
-		alert("ovo je btnCancel");
+		//alert("ovo je btnCancel");
+		get_file_dialog();
 	});
 
 	// code to read selected table row cell data (values).
@@ -83,56 +84,75 @@ $(document).ready(function(){
 
 }); //end document ready
 
-function abc() {
+function get_file_dialog() {
+	// Stvaranje input elementa tipa "file"
+	var input = document.createElement('input');
+	input.type = 'file';
+  
+	// Dodavanje event slušatelja za kada se odabere slika
+	input.addEventListener('change', handleFileSelect);
+  
+	// Simuliranje klika na input element
+	input.click();
+  }
+  
+  function handleFileSelect(event) {
+	// Dohvaćanje odabrane datoteke
+	var file = event.target.files[0];
+  
+	// Ovdje možete izvršiti daljnje operacije s odabranom slikom, kao što je prikazivanje slike na stranici ili slanje na server.
+	// Ovaj primjer samo ispisuje ime datoteke u konzoli.
+	console.log('Odabrana datoteka:', file.name);
+	posaljiSlikuNaServer(file);
+  }
 
-	jQuery(function($) {
-		$.ajax({
-			type: "POST",
-			url: "/process_qtc",
-			//data: JSON.stringify("kiki_riki"),
-			data: JSON.stringify({
-				action: "get_players_data",
-				payload: {'ime': 'kiki', 'prezime': 'riki'},
-			}),
-			contentType: "application/json",
-			dataType: 'json',
-			success:function(data) { //result
-				console.log('sve ok');
-				//console.log(data);
-				// convert to JOSON
-				//data = JSON.parse(data);
-				console.log(data);
-				
-			},
-			error: function(errorThrown){
-				console.log('error');
-				console.log(errorThrown);
-			}
-		});
+  function posaljiSlikuNaServer(slika) {
+	var formData = new FormData();
+	formData.append('slika', slika);
+  
+	var xhr = new XMLHttpRequest();
+	xhr.open('POST', 'ajaxcall_picture', true);
+	xhr.responseType = 'blob';
+  
+	xhr.onload = function() {
+	  if (xhr.status === 200) {
+		console.log('Slika je uspješno poslana na server!');
+		// Stvaranje objekta URL iz odgovora
+		var url = URL.createObjectURL(xhr.response);
 
-	});
-
-
-	}
+		// Stvaranje linka za preuzimanje
+		var link = document.createElement('a');
+		link.href = url;
+		link.download = 'odgovor_s_servera.jpg'; // Naziv datoteke za preuzimanje
+  
+		// Simuliranje klika na link
+		link.click();
+  
+		// Oslobađanje objekta URL
+		URL.revokeObjectURL(url);
+	  } else {
+		console.log('Dogodila se greška prilikom slanja slike na server.');
+	  }
+	};
+  
+	xhr.send(formData);
+  }
+  
 
 
 function ajax_js(action, payload) {
-	console.log("ovo je action", action);
-	console.log("ovo je payload", payload);
+	//console.log("ovo je action", action);
+	//console.log("ovo je payload", payload);
 	jQuery(function($) {
 		$.ajax({ //ajax request
 			type:"POST",
-			dataType: "json",
-			//url:"/ajaxcall/",
-			url: "/process_qtc",
+			url:"/ajaxcall",
 			data: JSON.stringify({
 				action: action,
 				payload: payload,
 			}),
-			headers: {
-				"X-Requested-With": "XMLHttpRequest",
-				"X-CSRFToken": get_cookie("csrftoken"),
-			},
+			contentType: "application/json",
+			dataType: "json",
 			success:function(data) { //result
 				console.log('sve ok');
 				//console.log(data);
@@ -160,22 +180,6 @@ function ajax_js(action, payload) {
 	});
 }
 
-
-function get_cookie(name) {
-	let cookieValue = null;
-	if (document.cookie && document.cookie !== "") {
-	  const cookies = document.cookie.split(";");
-	  for (let i = 0; i < cookies.length; i++) {
-		const cookie = cookies[i].trim();
-		// Does this cookie string begin with the name we want?
-		if (cookie.substring(0, name.length + 1) === (name + "=")) {
-		  cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-		  break;
-		}
-	  }
-	}
-	return cookieValue;
-}
 
 function InitTblSpiderList() {
 	$(document).ready(function(){
