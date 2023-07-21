@@ -7,27 +7,27 @@ import json
 from flask import Flask, render_template, send_file, request
 
 # NGROCK
-#from pyngrok import ngrok
+from pyngrok import ngrok
 
 # NGROCK
-#os.environ["FLASK_ENV"] = "development"
+os.environ["FLASK_ENV"] = "development"
 
 app = Flask(__name__)
 port = 5000
 
 # NGROCK
-#ngrok.set_auth_token("2Smrl6JUM9rTUwh3nuGmkKYnRwp_67SzH3fGPUbScrvPteVmC")
+ngrok.set_auth_token("2Smrl6JUM9rTUwh3nuGmkKYnRwp_67SzH3fGPUbScrvPteVmC")
 
 # ako ovo ostane zakomentirano, onda se ngrok nece pokrenuti u zasebnom threadu
 # NGROCK
-#public_url = ngrok.connect(port).public_url
-# print("ovo je public_url", public_url)
+public_url = ngrok.connect(port).public_url
+print("ovo je public_url", public_url)
 
 print("ovo je port", port)
 
 # ili ako ovo ostane zakomentirano, onda se ngrok nece pokrenuti u zasebnom threadu
 # NGROCK
-# app.config["BASE_URL"] = public_url
+app.config["BASE_URL"] = public_url
 
 @app.route("/")
 def index():
@@ -72,39 +72,14 @@ def procesiraj_sliku():
 		print('Primljena slika:', slika.filename)
 
 
-		folder = "resources/pictures"
-		ime_slike = "female_2_small.png"
-		#pict = ucitaj_sliku_iz_foldera(folder, ime_slike)
-
-		#Slika 'resources/pictures/female_2_small.png' nije pronađena u folderu 'resources/pictures'
-
-		#print("ovo je pict", pict)
-
 		return send_file('resources/pictures/female_2_small.png', as_attachment=True)
 
-		#return 'Slika je uspješno primljena i procesirana'
 
-def ucitaj_sliku_iz_foldera(folder, ime_slike):
-		putanja_slike = os.path.join(folder, ime_slike)
-
-		try:
-				slika = Image.open(putanja_slike)
-				# Ovdje možete izvršiti daljnje operacije s učitanom slikom
-				return slika
-		except FileNotFoundError:
-				print(f"Slika '{ime_slike}' nije pronađena u folderu '{folder}'")
-				return None
-		except Exception as e:
-				print(f"Došlo je do pogreške prilikom učitavanja slike: {e}")
-				return None
 
 # samo lokalno
-app.run(debug=True)
+#app.run(debug=True)
 
-# NGROK
+# NGROCK
 # Start the Flask server in a new thread
-#threading.Thread(target=app.run, kwargs={"use_reloader": False}).start()
+threading.Thread(target=app.run, kwargs={"use_reloader": False}).start()
 
-
-# create example how to use ajax with flask
-# https://www.youtube.com/watch?v=ZVGwqnjOKjk
