@@ -7,9 +7,15 @@ function testFunction() {
 $(document).ready(function(){
 
 	$('#btnRefresh').click(function () {
-		//console.log("ovo je btnRefresh");
-		alert("ovo je btnRefresh");
+		console.log("ovo je btnRefresh");
+		//alert("ovo je btnRefresh");
 		//window.location.replace("/");
+		action = 'abc'
+		payload = {'ime': 'kiki', 'prezime': 'riki'}
+		//ajax_js(action, payload);
+
+		abc();
+
 		
 	});
 
@@ -77,13 +83,48 @@ $(document).ready(function(){
 
 }); //end document ready
 
+function abc() {
+
+	jQuery(function($) {
+		$.ajax({
+			type: "POST",
+			url: "/process_qtc",
+			//data: JSON.stringify("kiki_riki"),
+			data: JSON.stringify({
+				action: "get_players_data",
+				payload: {'ime': 'kiki', 'prezime': 'riki'},
+			}),
+			contentType: "application/json",
+			dataType: 'json',
+			success:function(data) { //result
+				console.log('sve ok');
+				//console.log(data);
+				// convert to JOSON
+				//data = JSON.parse(data);
+				console.log(data);
+				
+			},
+			error: function(errorThrown){
+				console.log('error');
+				console.log(errorThrown);
+			}
+		});
+
+	});
+
+
+	}
+
 
 function ajax_js(action, payload) {
+	console.log("ovo je action", action);
+	console.log("ovo je payload", payload);
 	jQuery(function($) {
 		$.ajax({ //ajax request
 			type:"POST",
 			dataType: "json",
-			url:"/ajaxcall/",
+			//url:"/ajaxcall/",
+			url: "/process_qtc",
 			data: JSON.stringify({
 				action: action,
 				payload: payload,
@@ -96,7 +137,8 @@ function ajax_js(action, payload) {
 				console.log('sve ok');
 				//console.log(data);
 				// convert to JOSON
-				data = JSON.parse(data);
+				//data = JSON.parse(data);
+				console.log(data);
 
 				switch(action) {
 					case "get_players_data":
